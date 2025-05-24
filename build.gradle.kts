@@ -26,7 +26,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly("com.h2database:h2")
 
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     implementation("io.github.microutils:kotlin-logging:2.0.8")
+    implementation("org.apache.commons:commons-lang3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
