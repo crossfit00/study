@@ -2,7 +2,7 @@ package com.example.study.domain.member.api
 
 import com.example.study.common.exception.ApiResponse
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,7 +18,7 @@ class MemberApi(
     private val memberService: MemberService
 ) {
 
-    @GetMapping("/member")
+    @PostMapping("/member")
     fun register(@Valid @RequestBody request: MemberRegisterRequest): ApiResponse<Nothing> {
         memberService.register(request)
         return ApiResponse.success()
