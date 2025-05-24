@@ -27,4 +27,13 @@ class MemberService(
 
         memberRepository.save(request.toEntity())
     }
+
+    @Transactional
+    fun withdraw(memberId: Long) {
+        val member = memberRepository.findById(memberId).orElseThrow {
+            throw ApiException.from(ErrorCode.E404_NOT_FOUND, "요청 MemberId($memberId)는 존재하지 않습니다.")
+        }
+
+        member.updateWithDrawMember()
+    }
 }

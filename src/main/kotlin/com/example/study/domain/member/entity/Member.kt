@@ -30,8 +30,14 @@ class Member(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    val status: MemberStatus,
+    var status: MemberStatus,
 
     @Column(name = "withdraw_at", nullable = true)
-    val withdrawAt: LocalDateTime? = null
-): BaseEntity()
+    var withdrawAt: LocalDateTime? = null
+): BaseEntity() {
+
+    fun updateWithDrawMember() {
+        this.status = MemberStatus.WITHDRAWN
+        this.withdrawAt = LocalDateTime.now()
+    }
+}

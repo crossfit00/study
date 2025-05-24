@@ -2,6 +2,8 @@ package com.example.study.domain.member.api
 
 import com.example.study.common.exception.ApiResponse
 import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -21,6 +23,12 @@ class MemberApi(
     @PostMapping("/member")
     fun register(@Valid @RequestBody request: MemberRegisterRequest): ApiResponse<Nothing> {
         memberService.register(request)
+        return ApiResponse.success()
+    }
+
+    @DeleteMapping("/member/{memberId}/withdraw")
+    fun withdraw(@PathVariable memberId: Long): ApiResponse<Nothing> {
+        memberService.withdraw(memberId)
         return ApiResponse.success()
     }
 }
