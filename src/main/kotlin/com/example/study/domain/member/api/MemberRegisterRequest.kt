@@ -20,10 +20,8 @@ data class MemberRegisterRequest(
     @field:NotBlank
     val phoneNumber: String,
 
-    @field:NotBlank
     val gender: Gender,
 
-    @field:NotBlank
     val birth: LocalDate
 ) {
     fun toEntity(): Member {

@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository
  * @version 1.0.0
  * @since 2025. 05. 25.
  */
-interface MemberRepository : JpaRepository<Member, Long>
+interface MemberRepository : JpaRepository<Member, Long> {
+    fun existsByPhoneNumber(phoneNumber: String): Boolean
+}

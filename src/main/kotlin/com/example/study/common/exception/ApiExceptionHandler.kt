@@ -24,9 +24,9 @@ class ApiExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
-    private fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
-        log.warn(e.message)
-        val rootCause = e.rootCause
+    private fun handleHttpMessageNotReadableException(exception: HttpMessageNotReadableException): ApiResponse<Nothing> {
+        log.warn(exception.message)
+        val rootCause = exception.rootCause
         if (rootCause is MismatchedInputException) {
             val missingField = rootCause.path?.lastOrNull()?.fieldName ?: "unknown"
             return ApiResponse.fail(ErrorCode.E400_BAD_REQUEST, "Parameter ($missingField) is missing or invalid.")
@@ -35,4 +35,14 @@ class ApiExceptionHandler {
         return ApiResponse.fail(ErrorCode.E400_BAD_REQUEST)
     }
 
+    @ExceptionHandler(ApiException::class)
+    private fun handleBaseException(exception: ApiException): ApiResponse<Nothing> {
+        val errorCode = exception.errorCode
+        if (errorCode.httpStatus.is4xxClientError) {
+            log.warn(exception.resultErrorMessage)
+        } else {
+            log.error(exception.resultErrorMessage, exception)
+        }
+        return ApiResponse.fail(errorCode = errorCode)
+    }
 }
